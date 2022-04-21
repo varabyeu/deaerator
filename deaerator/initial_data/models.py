@@ -24,6 +24,41 @@ class InitialData(models.Model):
         max_digits=4,
         decimal_places=2
     )
+    is_steam_saturated = models.BooleanField(
+        verbose_name='Насыщенный пар',
+        default=True
+    )
+
+    time_water_reserve = models.DecimalField(
+        verbose_name='Время запаса воды на период остановки подпитки, ч',
+        default=1,
+        max_digits=3,
+        decimal_places=1
+    )
+    second_steam_flow = models.DecimalField(
+        verbose_name='Расход пара вторничного вскипания на деаэратор, т/ч',
+        default=0,
+        max_digits=5,
+        decimal_places=1
+    )
+    second_steam_pressure = models.DecimalField(
+        verbose_name='Давление пара вторничного вскипания, МПа',
+        default=0,
+        max_digits=4,
+        decimal_places=2
+    )
+    condensate_flow = models.DecimalField(
+        verbose_name='Расход конденсата на деаэратор, т/ч',
+        default=0,
+        max_digits=5,
+        decimal_places=1
+    )
+    condensate_temp = models.DecimalField(
+        verbose_name='Температура конденсата, град. Цельсия',
+        default=0,
+        max_digits=5,
+        decimal_places=1
+    )
     date = models.DateField(verbose_name='Дата заполнения', auto_now=True)
     notes = models.CharField(
         max_length=255,
@@ -37,3 +72,7 @@ class InitialData(models.Model):
 
     class Meta:
         ordering = ('date', 'id', )
+
+class HeatBalance:
+    pass
+
