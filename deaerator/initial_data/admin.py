@@ -5,4 +5,5 @@ from initial_data.models import InitialData
 
 @admin.register(InitialData)
 class InitialDataAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'productivity_max', 'water_temperature', 'date']
+    list_display = ['__str__', 'productivity_max', 'water_temperature', 'date', 'notes']
+    list_filter = ['productivity_max', 'date']
