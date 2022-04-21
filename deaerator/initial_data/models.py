@@ -28,7 +28,11 @@ class InitialData(models.Model):
         verbose_name='Насыщенный пар',
         default=True
     )
-
+    if is_steam_saturated is False:
+        steam_temperature = models.PositiveIntegerField(
+            verbose_name='Температура пара',
+            default=102
+        )
     time_water_reserve = models.DecimalField(
         verbose_name='Время запаса воды на период остановки подпитки, ч',
         default=1,
