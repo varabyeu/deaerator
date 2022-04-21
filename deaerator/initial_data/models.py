@@ -24,15 +24,6 @@ class InitialData(models.Model):
         max_digits=4,
         decimal_places=2
     )
-    is_steam_saturated = models.BooleanField(
-        verbose_name='Насыщенный пар',
-        default=True
-    )
-    if is_steam_saturated is False:
-        steam_temperature = models.PositiveIntegerField(
-            verbose_name='Температура пара',
-            default=102
-        )
     time_water_reserve = models.DecimalField(
         verbose_name='Время запаса воды на период остановки подпитки, ч',
         default=1,
@@ -75,8 +66,22 @@ class InitialData(models.Model):
         return f'Запрос № {self.id} - атмосферный деаэратор {self.productivity_max} м3/ч от {self.date}'
 
     class Meta:
-        ordering = ('date', 'id', )
+        ordering = ('date', 'id',)
+        verbose_name = 'Исходные данные к проекту'
+        verbose_name_plural = 'Исходные данные к проекту'
 
-class HeatBalance:
-    pass
 
+    def condense_state(self):
+        """Агрегатное состояние конденсата
+
+        Возвращает состояние конденсата перед деаэратором
+        """
+
+        if self.condensate_temp > 100:
+            condense_state = 'boiling'
+        else:
+            condense_state = 'non-boiling'
+        return condense_state
+
+    def condense_heat(self):
+        return self.condensate_temp * self.condensate_flow / 1000

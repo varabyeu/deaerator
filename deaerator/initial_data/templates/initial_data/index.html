@@ -1,0 +1,45 @@
+{% extends 'initial_data/base.html' %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block content %}
+    <div class="container py-3">
+        <header>
+            <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                    <span class="fs-4">Деаэратор</span>
+                </a>
+
+            <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'home' %}">Главная</a>
+                <a class="py-2 text-dark text-decoration-none" href="#">В кабинет</a>
+            </nav>
+            </div>
+            <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+                <h1 class="display-4 fw-normal">Расчет деаэратора</h1>
+                <h3 class="display-8 fw-normal">Тепловой расчет</h3>
+            </div>
+            {% if all_objects %}
+                {% for el in all_objects %}
+                <div class="row row-cols-1 mb-3 text-center">
+                    <div class="col">
+                        <div class="card mb-4 rounded-3 shadow-sm">
+                            <div class="card-header py-3">
+                                <h4 class="my-0 fw-normal">Расчет №{{ el.id }}</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="fs-5 text-muted"><h4>Производительность {{ el.productivity_max }} т/ч</h4>
+                                    <li>Минимальная производительность {{ el.productivity_min }} т/ч</li>
+                                    <li>Температура деаэрации {{ el.water_temperature }} град. Ц</li>
+                                    <li>Дата заявки - <b>{{ el.date|date:"d-m-Y" }}</b></li>
+                                </ul>
+                                <button type="button" class="w-100 btn btn-lg btn-outline-primary">Перейти к расчету</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}<h3>Информация отсустствует</h3>{% endif %}
+        </header>
+    </div>
+{% endblock %}
